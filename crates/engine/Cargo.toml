@@ -31,7 +31,7 @@ photocraft-io = { workspace = true }
 photocraft-psd = { workspace = true }
 photocraft-format = { workspace = true }
 photocraft-plugins = { workspace = true }
-cobalt-core = { path = "../../../image-as-audio/crates/cobalt-core" } # cobalt
+cobalt-core = { path = "../../../cobalt/crates/cobalt-core" } # cobalt
 base64 = "0.22"
 blake3 = { version = "1.8", default-features = false, features = ["pure"] }
 photocraft-codecs = { workspace = true }

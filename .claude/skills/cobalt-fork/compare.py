@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: GPL-3.0-or-later
-"""Renders effects through the Image as Audio app's CLI and PhotoCraft's `filter.audio.<effect>` commands
+"""Renders effects through the Cobalt app's CLI and PhotoCraft's `filter.audio.<effect>` commands
 and checks that the RGB bytes are identical (cobalt fork, see SKILL.md).
 
     .claude/skills/cobalt-fork/compare.py [--photocraft-cli PATH] [--app PATH] [--image PATH]
 
 Defaults: target/debug/photocraft-cli (build it first: cargo build -p photocraft-cli),
-../image-as-audio/target/release/cobalt-native (cargo build --release there) and the app's
+../cobalt/target/release/cobalt-native (cargo build --release there) and the app's
 test/sample.avif. Exit status 1 when any effect differs or fails. Needs Pillow.
 """
 
@@ -21,7 +21,7 @@ from pathlib import Path
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[3]
-APP_REPO = ROOT.parent / "image-as-audio"
+APP_REPO = ROOT.parent / "cobalt"
 
 # (name, app CLI effect spec, PhotoCraft params): every audio effect, plus each encoding,
 # opacity and option kind at least once.

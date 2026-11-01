@@ -10,7 +10,7 @@
 #   scripts/cobalt-update.sh -- --model opus   # anything after -- goes to `claude`
 #
 # Needs: `claude` on PATH, the remotes `upstream` (storytold/photocraft) and `origin` (the fork),
-# and the Image as Audio app checked out at ../image-as-audio (the fork builds its effects
+# and the Cobalt app checked out at ../cobalt (the fork builds its effects
 # from there). The log of a headless run goes to target/cobalt-update-<time>.log.
 set -euo pipefail
 
@@ -33,14 +33,14 @@ done
 root=$(git rev-parse --show-toplevel)
 cd "$root"
 branch=cobalt
-app=$(cd .. && pwd)/image-as-audio
+app=$(cd .. && pwd)/cobalt
 
 die() { echo "cobalt-update: $*" >&2; exit 1; }
 [ "$(git branch --show-current)" = "$branch" ] || die "check out the $branch branch first"
 git diff --quiet && git diff --cached --quiet || die "the working tree has uncommitted changes"
 [ -z "$(git ls-files --others --exclude-standard)" ] || die "the working tree has untracked files"
 [ ! -e "$(git rev-parse --git-path MERGE_HEAD)" ] || die "a merge is already in progress"
-[ -f "$app/crates/cobalt-core/Cargo.toml" ] || die "the Image as Audio app is not at $app"
+[ -f "$app/crates/cobalt-core/Cargo.toml" ] || die "the Cobalt app is not at $app"
 git remote get-url upstream >/dev/null 2>&1 || die "no 'upstream' remote (git remote add upstream https://github.com/storytold/photocraft.git)"
 command -v claude >/dev/null || die "claude (Claude Code) is not on PATH"
 

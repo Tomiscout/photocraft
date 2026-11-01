@@ -1,6 +1,6 @@
 ---
 name: cobalt-fork
-description: The `cobalt` fork of PhotoCraft, which adds the Image as Audio ("cobalt") app's audio effects as Filter › Audio Effects › <effect>… and as smart filters from the Adjustments panel. Use it for any work on this fork, and always when merging upstream PhotoCraft into it (`scripts/cobalt-update.sh` runs this skill headless), resolving merge conflicts, fixing the fork after an upstream or Image as Audio change, or answering how the audio effects are hooked into PhotoCraft.
+description: The `cobalt` fork of PhotoCraft, which adds the Cobalt app's audio effects as Filter › Audio Effects › <effect>… and as smart filters from the Adjustments panel. Use it for any work on this fork, and always when merging upstream PhotoCraft into it (`scripts/cobalt-update.sh` runs this skill headless), resolving merge conflicts, fixing the fork after an upstream or Cobalt change, or answering how the audio effects are hooked into PhotoCraft.
 ---
 
 # The cobalt fork
@@ -9,8 +9,8 @@ description: The `cobalt` fork of PhotoCraft, which adds the Image as Audio ("co
 
 - **This repo:** `Tomiscout/photocraft` (remote `origin`). The work lives on branch `cobalt`.
   `main` mirrors upstream PhotoCraft (`storytold/photocraft`, remote `upstream`).
-- **Purpose:** PhotoCraft with the audio effects of the owner's own app, **Image as Audio**
-  (codename *cobalt*; GTK app at `../image-as-audio`, `Tomiscout/image-as-audio`), built in.
+- **Purpose:** PhotoCraft with the audio effects of the owner's own app, **Cobalt**
+  (GTK app at `../cobalt`, `Tomiscout/cobalt`), built in.
   Those effects read an image's colour bytes as a mono audio signal, run audio DSP over them
   (wah-wah, reverb…) and write the result back as pixels.
 - **This fork will never be merged upstream.** It is a personal build that gets upstream
@@ -21,9 +21,9 @@ description: The `cobalt` fork of PhotoCraft, which adds the Image as Audio ("co
   stays cheap. Everything the fork adds lives in fork-only files. Upstream files carry only
   one-line hooks, each marked `// cobalt` (`# cobalt` in TOML).
 - **One copy of the effects.** The DSP is not copied into this repo. The engine depends on the
-  app's `cobalt-core` crate **by path** (`../image-as-audio/crates/cobalt-core`), so the fork always
+  app's `cobalt-core` crate **by path** (`../cobalt/crates/cobalt-core`), so the fork always
   builds the app's current effects, bit for bit. That needs the app checked out next to this
-  repo: `~/code/image-as-audio` beside `~/code/photocraft`.
+  repo: `~/code/cobalt` beside `~/code/photocraft`.
 - The WebAssembly plug-in route (Filter › Plug-ins) was tried and dropped: sandboxed bands
   broke effects with memory and the generated dialog couldn't be laid out. Ignore wasm.
 
@@ -116,7 +116,7 @@ exactly these:
 
 | File | Hook | Why |
 |---|---|---|
-| `crates/engine/Cargo.toml` | `cobalt-core = { path = "../../../image-as-audio/crates/cobalt-core" } # cobalt` after `photocraft-plugins` | The effects |
+| `crates/engine/Cargo.toml` | `cobalt-core = { path = "../../../cobalt/crates/cobalt-core" } # cobalt` after `photocraft-plugins` | The effects |
 | `crates/engine/src/cmd.rs` | `pub mod cobalt_cmds; // cobalt` after `pub mod plugin_cmds;` | Declares the module |
 | `crates/engine/src/cmd.rs` | `v.extend(crate::cobalt_cmds::specs()); // cobalt` after the `plugin_cmds::specs()` line in the command list | Registers the command. Menu, CLI, MCP and the control channel come with it |
 | `crates/engine/src/lib.rs` | `pub use cmd::cobalt_cmds; // cobalt` after `pub use cmd::plugin_cmds;` | `crate::cobalt_cmds` paths, and the UI's access |
@@ -165,7 +165,7 @@ update. It does the following:
 `scripts/cobalt-update.sh` checks the preconditions, runs `git fetch upstream`, turns on
 `rerere`, then runs this skill headless. When asked to update:
 
-1. **Check the start state.** You're on `cobalt` with a clean tree, `../image-as-audio/crates/cobalt-core`
+1. **Check the start state.** You're on `cobalt` with a clean tree, `../cobalt/crates/cobalt-core`
    exists, and `git rev-list --count HEAD..upstream/main` is above 0 (if it's 0, say so and stop).
 2. **Merge, don't rebase:** `git merge --no-edit upstream/main`. Merging keeps the `cobalt`
    history and makes the next merge cheap.
@@ -189,7 +189,7 @@ update. It does the following:
    cargo test -p photocraft-ui-egui --lib cobalt_ui
    cargo clippy -p photocraft-engine -p photocraft-ui-egui --lib -- -D warnings
    cargo xtask layers
-   cargo build -p photocraft-cli && (cd ../image-as-audio && cargo build --release) \
+   cargo build -p photocraft-cli && (cd ../cobalt && cargo build --release) \
      && .claude/skills/cobalt-fork/compare.py        # needs Pillow; every effect 0 bytes differ
    git grep -n cobalt -- crates                      # exactly the hooks in the table above
    git diff upstream/main --stat -- crates Cargo.toml # only the hook files and the fork-only files
@@ -210,9 +210,9 @@ If something can't be resolved without changing upstream behaviour (for example,
 removed filter dialogs as they work now), stop. Leave the merge in progress (or abort it with
 `git merge --abort` if nothing is salvageable) and explain what changed and what you suggest.
 
-## When the Image as Audio app changes
+## When the Cobalt app changes
 
-The fork builds `../image-as-audio/crates/cobalt-core` as it is on disk, so app changes arrive
+The fork builds `../cobalt/crates/cobalt-core` as it is on disk, so app changes arrive
 with the next build. These are the parts of `cobalt-core` the fork uses:
 - `effects::{EffectKind, EffectInstance, ParamSpec, OPACITY, SAMPLE_RATE, slug}`
 - `ParamSpec::ident`

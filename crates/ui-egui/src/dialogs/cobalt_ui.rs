@@ -1,5 +1,5 @@
 //! The Filter › Audio Effects › <effect>… dialogs (`photocraft_engine::cobalt_cmds`), laid out like
-//! the Image as Audio app's layer sidebar instead of the generated one-row-per-parameter list, and
+//! the Cobalt app's layer sidebar instead of the generated one-row-per-parameter list, and
 //! the Adjustments panel's row of audio effects with their colour icons.
 //!
 //! FORK-ONLY (Tomiscout/photocraft, branch `cobalt`). The dialog is routed from

@@ -1,9 +1,9 @@
-//! Filter › Audio Effects › <effect>…: Image as Audio's ("cobalt") audio effects as built-in
+//! Filter › Audio Effects › <effect>…: Cobalt's ("cobalt") audio effects as built-in
 //! filters, one command per effect (`filter.audio.wahwah`, `filter.audio.reverb`, …).
 //!
 //! FORK-ONLY (Tomiscout/photocraft, branch `cobalt`); upstream never sees this file. The effects
-//! themselves are not here: they are the `cobalt-core` crate of the Image as Audio app
-//! (`../image-as-audio/crates/cobalt-core`, a path dependency), the same code the app runs. This
+//! themselves are not here: they are the `cobalt-core` crate of the Cobalt app
+//! (`../cobalt/crates/cobalt-core`, a path dependency), the same code the app runs. This
 //! module only maps command params to an `cobalt_core::effects::EffectInstance` and runs
 //! `cobalt_core::dsp::apply_effect` over the layer, natively and on all cores. The commands are
 //! generated from `EffectKind::ALL`, so an effect added to the app shows up here by itself. How it
@@ -95,7 +95,7 @@ fn params_notation(kind: EffectKind) -> String {
         notation(OPACITY_KEY, &OPACITY),
     ];
     parts.extend(kind.params().iter().map(|spec| notation(&spec.ident(kind), spec)));
-    format!("{{{}}} (Image as Audio: the colour bytes read as a mono signal)", parts.join(","))
+    format!("{{{}}} (Cobalt: the colour bytes read as a mono signal)", parts.join(","))
 }
 
 fn bad(kind: EffectKind, msg: impl Into<String>) -> EngineError {

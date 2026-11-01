@@ -43,7 +43,7 @@ fi
 
 root=$(git -C "$(dirname "$0")" rev-parse --show-toplevel)
 cd "$root"
-[ -f ../image-as-audio/crates/cobalt-core/Cargo.toml ] || { echo "cobalt-install: needs the Image as Audio app at ../image-as-audio" >&2; exit 1; }
+[ -f ../cobalt/crates/cobalt-core/Cargo.toml ] || { echo "cobalt-install: needs the Cobalt app at ../cobalt" >&2; exit 1; }
 command -v magick >/dev/null || { echo "cobalt-install: needs ImageMagick (magick) for the icon" >&2; exit 1; }
 
 echo "cobalt-install: building (release, this takes a while)"
@@ -79,7 +79,7 @@ sed -e "s|^Name=PhotoCraft$|Name=$NAME|" \
     -e "s|^TryExec=photocraft$|TryExec=$BIN/photocraft-cobalt|" \
     -e "s|^Icon=ai.storyteller.photocraft$|Icon=$ID|" \
     -e "s|^StartupWMClass=ai.storyteller.photocraft$|StartupWMClass=$ID|" \
-    -e "s|^Comment=.*|Comment=PhotoCraft with Image as Audio's audio effects (Filter › Audio Effects…)|" \
+    -e "s|^Comment=.*|Comment=PhotoCraft with Cobalt's audio effects (Filter › Audio Effects…)|" \
     -e '/^#/d' -e '/^X-AppImage-Integrate=/d' \
     packaging/linux/ai.storyteller.photocraft.desktop > "$APPS/$ID.desktop"
 for key in "Name=$NAME" "Exec=$BIN/photocraft-cobalt %F" "Icon=$ID" "StartupWMClass=$ID"; do
