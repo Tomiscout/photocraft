@@ -3,7 +3,7 @@
 //! rules can match them (Hyprland's `class:`, #6697). Without one their app id is empty.
 
 /// Matches the `.desktop` file and hicolor icon name, so Wayland docks pick up the icon.
-pub const APP_ID: &str = "ai.storyteller.photocraft";
+pub const APP_ID: &str = match option_env!("PHOTOCRAFT_APP_ID") { Some(id) => id, None => "ai.storyteller.photocraft" }; // cobalt: scripts/cobalt-install.sh
 
 /// A builder for an extra OS window, carrying [`APP_ID`].
 pub fn builder() -> egui::ViewportBuilder {

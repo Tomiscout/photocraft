@@ -400,6 +400,7 @@ fn filter_body(app: &mut PhotocraftApp, ui: &mut egui::Ui, d: &Dialog, fields: &
     let room = (ui.ctx().content_rect().height() - DIALOG_CHROME - crate::filter_preview_ui::reserved_height(fields)).max(120.0);
     let body = |ui: &mut egui::Ui, fields: &mut serde_json::Map<String, Value>| {
         egui::ScrollArea::vertical().id_salt(id.with("body")).max_height(room).show(ui, |ui| {
+            if let Some(kind) = cobalt_ui::owner(fields) { cobalt_ui::body(ui, kind, fields) } else // cobalt
             if crate::bitmap_dialog::owns(fields) {
                 crate::bitmap_dialog::body(app, ui, fields);
             } else {
@@ -1126,6 +1127,7 @@ pub(super) mod filter_preview_ui;
 pub(super) mod filter_preview_worker;
 pub mod gallery_ui;
 pub mod guide_layout_ui;
+pub mod cobalt_ui; // cobalt
 pub mod history_options_ui;
 pub mod jpeg_options_ui;
 pub mod layer_picker;

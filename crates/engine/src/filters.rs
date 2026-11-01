@@ -200,6 +200,7 @@ pub fn apply_filter_to_surface(
     if let Some(kind) = id.strip_prefix("image.adjustments.") {
         return Ok(crate::adjust_cmds::adjust_as_filter(kind, params, surf));
     }
+    if let Some(out) = crate::cobalt_cmds::apply_to_surface(id, params, surf, selection, canvas) { return Ok(Some(out)); } // cobalt
     // WebAssembly plug-in smart filters (plugin_cmds).
     if id == crate::plugin_cmds::RUN {
         return Ok(crate::plugin_cmds::apply_to_surface(id, params, surf, selection, canvas));

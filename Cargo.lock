@@ -1164,6 +1164,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "cobalt-core"
+version = "0.1.0"
+
+[[package]]
 name = "cobs"
 version = "0.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -5159,6 +5163,7 @@ dependencies = [
  "base64 0.22.1",
  "blake3",
  "chrono",
+ "cobalt-core",
  "craft-print",
  "exr",
  "flate2",

@@ -250,6 +250,7 @@ const FULL_RESOLUTION_PREVIEW: &[&str] = &[
 fn full_resolution_preview(command: &str, params: &Value) -> bool {
     let choice = |key: &str| params.get(key).and_then(Value::as_str);
     FULL_RESOLUTION_PREVIEW.contains(&command)
+        || photocraft_engine::cobalt_cmds::kind_of(command).is_some() // cobalt: audio effects on reduced bytes look nothing like the result
         || command.starts_with("filter.gallery.")
         || (command == "image.mode.indexedColor" && choice("dither") != Some("none"))
         || (command == "image.mode.bitmap" && !matches!(choice("method"), Some("threshold" | "threshold50")))
