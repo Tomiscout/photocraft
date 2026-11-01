@@ -241,6 +241,7 @@ pub(super) fn adjustments_grid(app: &mut PhotocraftApp, ui: &mut egui::Ui) {
         let _ = app.run(&id, json!({}));
         app.ui.dock_tabs.properties = 0;
     }
+    crate::dialogs::cobalt_ui::adjustments_row(app, ui); // cobalt
 }
 
 /// The options bar's Select and Mask… button: greyed out, as the menu item is, until there is a
